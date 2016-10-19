@@ -61,6 +61,19 @@ public class Graph {
 	}
 	
 	//----------------------------------------------------------
+	public void clear()
+	{
+		for(int i = 0; i < this.MAX_VERTEX; i++) 
+		{	
+			for (int j = 0; i < this.MAX_VERTEX; i++)
+			{
+				this.adjMat[i][j] = 0; 
+			}
+		}
+	
+	}
+	
+	//----------------------------------------------------------
 	
 	public void Depth_First_Search()
 	{
@@ -80,9 +93,7 @@ public class Graph {
 				this.displayVertex(v);
 				stack.push(v);
 			}
-		}
-		
-		// a pilha está vazia, então o algoritmo terminou!
+		}// a pilha está vazia, então o algoritmo terminou!
 		
 		for (int i = 0; i < this.nVerts; i++) // reset flags
 		{
@@ -110,7 +121,7 @@ public class Graph {
 				this.displayVertex(v);
 				queue.insert(v);
 				
-			} // a fila está fazia,logo o alritmo terminou!
+			} // a fila está fazia,logo o algoritmo terminou!
 			
 		}
 		
@@ -119,6 +130,40 @@ public class Graph {
 			this.vertexlist[i].setVisitado(false);
 		}
 		
+		
+	}// fim da BFS
+	
+	public void Minimum_Spaning_Tree()
+	{
+		this.vertexlist[0].setVisitado(true);
+		stack.push(0);
+		while(!stack.isEmpty())
+		{
+			int u = stack.top();
+			int v = this.getAdjUnvitedVertex(u);
+			if ( v == -1)
+			{
+				stack.pop();
+			}
+			
+			else
+			{
+				this.vertexlist[v].setVisitado(true);
+				stack.push(v);
+				
+				this.displayVertex(u);
+				this.displayVertex(v);
+				System.out.println(" ");
+				
+				
+			}
+		
+		}// a pilha está vazia, então o algoritmo terminou!
+		
+		for (int i = 0; i < this.nVerts; i++) // reset flags
+		{
+			this.vertexlist[i].setVisitado(false);
+		}
 		
 	}
 	
