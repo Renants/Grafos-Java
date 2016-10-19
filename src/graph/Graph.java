@@ -6,6 +6,7 @@ public class Graph {
 	private int adjMat[][];
 	private int nVerts; // numeros de vertices atuais
 	private Stack stack;
+	private Queue queue;
 	//----------------------------------------------------------
 	
 	public Graph()
@@ -81,7 +82,7 @@ public class Graph {
 			}
 		}
 		
-		// a pilha está vazia então o algoritmo terminou!
+		// a pilha está vazia, então o algoritmo terminou!
 		
 		for (int i = 0; i < this.nVerts; i++) // reset flags
 		{
@@ -89,6 +90,37 @@ public class Graph {
 		}
 		
 	} // fim da DFS
+	
+	//----------------------------------------------------------
+	
+	public void Breadth_Fist_Search()
+	{
+		this.vertexlist[0].setVisitado(true);
+		this.displayVertex(0);
+		queue.insert(0);
+		int u,v;
+		
+		while(!queue.isEmpty())
+		{
+			u = queue.remove(0);
+			// enquanto u não tiver adjacentes
+			while( (v = this.getAdjUnvitedVertex(u)) != -1)
+			{
+				this.vertexlist[v].setVisitado(true);
+				this.displayVertex(v);
+				queue.insert(v);
+				
+			} // a fila está fazia,logo o alritmo terminou!
+			
+		}
+		
+		for (int i = 0; i < this.nVerts; i++) // reset flags
+		{
+			this.vertexlist[i].setVisitado(false);
+		}
+		
+		
+	}
 	
 }// fim da classe Graph
 	
