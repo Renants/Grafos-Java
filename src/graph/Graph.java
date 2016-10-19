@@ -5,7 +5,7 @@ public class Graph {
 	private Vertex vertexlist[];
 	private int adjMat[][];
 	private int nVerts; // numeros de vertices atuais
-	
+	private Stack stack;
 	//----------------------------------------------------------
 	
 	public Graph()
@@ -47,4 +47,48 @@ public class Graph {
 	
 	//----------------------------------------------------------
 	
+	public int getAdjUnvitedVertex( int u )
+	{
+		for (int j = 0; j < this.nVerts; j++)
+		{
+			if(this.adjMat[u][j] == 1 && this.vertexlist[j].getVisited())
+			
+				return j;
+			
+		}
+		return -1;
+	}
+	
+	//----------------------------------------------------------
+	
+	public void Depth_First_Search()
+	{
+		this.vertexlist[0].setVisitado(true);
+		this.displayVertex(0);
+		this.stack.push(0); //pilha recebe um vertice
+		while(!stack.isEmpty())
+		{
+			int v = this.getAdjUnvitedVertex(stack.top());
+			if (v == -1) //sem adjacentes!
+			{
+				stack.pop();
+			}
+			else // se existe adjacente
+			{
+				this.vertexlist[v].setVisitado(true);
+				this.displayVertex(v);
+				stack.push(v);
+			}
+		}
+		
+		// a pilha está vazia então o algoritmo terminou!
+		
+		for (int i = 0; i < this.nVerts; i++) // reset flags
+		{
+			this.vertexlist[i].setVisitado(false);
+		}
+		
+	} // fim da DFS
+	
 }// fim da classe Graph
+	

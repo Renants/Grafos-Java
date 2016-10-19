@@ -2,8 +2,8 @@ package graph;
 
 public class Vertex {
 
-	public  char label;
-	public boolean wasVisited;
+	private  char label;
+	private boolean wasVisited;
 	
 	public Vertex(char lab) //construtor
 	{
@@ -18,7 +18,15 @@ public class Vertex {
         return String.format("%s", ch);
     }
 
+	public boolean getVisited()
+	{
+		return this.wasVisited;
+	}
 	
+	public void setVisitado(boolean bool)
+	{
+		this.wasVisited = bool;
+	}
 	
 
 } // fim da classe
