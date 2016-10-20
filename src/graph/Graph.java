@@ -3,7 +3,7 @@ package graph;
 public class Graph {
 	private final int MAX_VERTEX = 20; // numero de vertices máximos
 	private Vertex vertexlist[];
-	private boolean directed = false;
+	private boolean directed;
 	private int adjMat[][];
 	private int nVerts; // numeros de vertices atuais
 	private Stack stack;
@@ -12,6 +12,7 @@ public class Graph {
 	
 	public Graph()
 	{
+		this.directed = false;
 		this.vertexlist = new Vertex[MAX_VERTEX];
 		this.adjMat = new int[MAX_VERTEX][MAX_VERTEX];
 		this.nVerts = 0;
@@ -25,6 +26,10 @@ public class Graph {
 		
 	} // fim do construtor
 
+	public void setDirected(boolean bool)
+	{
+		this.directed = bool;
+	}
 	//----------------------------------------------------------
 
 	public void addVertex( char lab) // argumento eh um idenficador
