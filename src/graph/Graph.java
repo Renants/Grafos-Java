@@ -3,6 +3,7 @@ package graph;
 public class Graph {
 	private final int MAX_VERTEX = 20; // numero de vertices máximos
 	private Vertex vertexlist[];
+	private boolean directed = false;
 	private int adjMat[][];
 	private int nVerts; // numeros de vertices atuais
 	private Stack stack;
@@ -35,8 +36,16 @@ public class Graph {
 	
 	public void addEdge(int origin,int destine )
 	{
-		this.adjMat[origin][destine] = 1;
-		this.adjMat[destine][origin] = 1;
+		if (this.directed == true)
+		{
+			this.adjMat[origin][destine] = 1;
+		}
+		else
+		{
+			this.adjMat[origin][destine] = 1;
+			this.adjMat[destine][origin] = 1;
+		}
+		
 	}
 	
 	//----------------------------------------------------------
@@ -48,7 +57,7 @@ public class Graph {
 	
 	//----------------------------------------------------------
 	
-	public int getAdjUnvitedVertex( int u )
+	public int getAdjUnvitedVertex( int u )// retorna o primeiro sucessor de qualquer vertice
 	{
 		for (int j = 0; j < this.nVerts; j++)
 		{
@@ -133,7 +142,9 @@ public class Graph {
 		
 	}// fim da BFS
 	
-	public void Minimum_Spaning_Tree()
+	//----------------------------------------------------------
+	
+	public void Minimum_Spaning_Tree() // não leva em consideração o peso *(ver imagem)
 	{
 		this.vertexlist[0].setVisitado(true);
 		stack.push(0);
@@ -165,7 +176,101 @@ public class Graph {
 			this.vertexlist[i].setVisitado(false);
 		}
 		
+	} // fim da arvore geradora mínima
+	
+	//----------------------------------------------------------
+	
+	//Passo 1 encontre um vertice sem sucessor
+	//Passo 2 retire esse vertice do grafo e ponha em uma lista
+	//passo 3 repita o passo 1
+	public void Topological_Sorting_Algorithm()
+	{
+		char []sortedArray = new char[this.nVerts];
+		int orig_Verts = this.nVerts; // numero de vertices no inicio
+		while( orig_Verts > 0)
+		{
+			int u = this.noSucessor();
+			if (u == -1) // deve ser um ciclo!
+			{
+				System.out.println("Erro, Grafo tem um ciclo!");
+				return;
+			}
+			
+			sortedArray[this.nVerts-1] = this.vertexlist[u].getLabel();
+			deleteVertex(u);
+				
+		}
+		
+		System.out.println("Topological Sorted Order: ");
+		for ( int i = 0; i< orig_Verts; i++)
+		{
+			System.out.println(sortedArray[i]);
+			System.out.println(" ");
+			
+		}
+		
 	}
+	
+	public void deleteVertex(int u)
+	{
+		if ( u != this.nVerts -1) // se não for o ultimo vertice
+		{
+			for ( int i = u; i < this.nVerts -1; i++ )
+				this.vertexlist[i] = this.vertexlist[i+1];//deleta elemento da lista de vertices
+			
+			for ( int row = u; row < this.nVerts -1; row++ ) // deleta a linha
+				moveRowup(row,this.nVerts);
+			
+			for ( int col = u; col < this.nVerts -1; col++ ) // deleta a coluna
+				moveColleft(col,this.nVerts);
+						
+				
+			}
+		this.nVerts--;// um vertice a menos
+		
+	}
+	
+	public void moveRowup(int row,int n)
+	{
+		for ( int col = 0; col < n; col++)
+		{
+			this.adjMat[row][col] = this.adjMat[row+1][col];
+		}
+	}
+	
+	public void moveColleft(int col, int n)
+	{
+		for ( int row = 0; row < n; row++)
+		{
+			this.adjMat[row][col] = this.adjMat[row][col+1];
+		}
+	
+	}
+	public int noSucessor() // retorna o primeiro vertice sem qualquer sucessor
+	{
+		boolean isEdge;
+		for(int row = 0; row < this.nVerts; row ++)// para todo vertice
+		{
+			isEdge = false;
+			for (int col = 0; col < this.nVerts; col ++)//verifica arestas
+			{
+				if ( this.adjMat[row][col]> 0 ) // existe aresta?
+				{
+					isEdge = true; // este vertice (row) tem sucessor
+					break;
+				}
+				
+			}
+			if ( !isEdge)
+			{
+				return row; // se sem aresta, sem sucessor
+			}
+		}
+		return -1; // não exite tal vertice
+	}// fim de sem sucessor
+	
+	//----------------------------------------------------------
+	
 	
 }// fim da classe Graph
 	

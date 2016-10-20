@@ -23,6 +23,11 @@ public class Vertex {
 		return this.wasVisited;
 	}
 	
+	public char getLabel()
+	{
+		return this.label;
+	}
+	
 	public void setVisitado(boolean bool)
 	{
 		this.wasVisited = bool;

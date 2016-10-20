@@ -32,6 +32,7 @@ public class Main {
 		grafo.addEdge(1, 4);//CD
 		grafo.addEdge(2, 3);//CE
 		grafo.addEdge(2, 4);//DE
+		grafo.Minimum_Spaning_Tree();
 	}
 
 }
